@@ -66,6 +66,9 @@ def customer_order():
     if request.method == "POST":
         staff_member = request.form.get("staff_member")
         order_date = request.form.get("order_date")
+        customer_last_name = request.form.get("customer_last_name")
+        db.execute("INSERT INTO orders(staff_member, order_date, customer_last_name) VALUES (?, ?, ?);", staff_member, order_date, customer_last_name)
+        return render_template("order_details.html")
         completion = request.form.get("completion")
         delivery_date = request.form.get("delivery_date")
         db.execute("INSERT INTO orders(staff_member, order_date, completion, delivery_date) VALUES (?,?,?,?);", staff_member, order_date, completion, delivery_date)
