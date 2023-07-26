@@ -59,6 +59,14 @@ def new_customer():
         return render_template("list_of_customers.html",detail = detail)
     if request.method == "GET":
         return render_template("new_customer.html")
+    
+@app.route("/list_of_customers", methods=["GET"])
+def list_of_customers():
+    if request.method == "GET":
+        detail = db.execute("select * from customers;")
+        return render_template("list_of_customers.html",detail = detail)
+        
+
 
 @app.route("/customer_order", methods=["GET", "POST"])
 def customer_order():
@@ -69,10 +77,41 @@ def customer_order():
         customer_last_name = request.form.get("customer_last_name")
         db.execute("INSERT INTO orders(staff_member, order_date, customer_last_name) VALUES (?, ?, ?);", staff_member, order_date, customer_last_name)
         return render_template("order_details.html")
-        completion = request.form.get("completion")
-        delivery_date = request.form.get("delivery_date")
-        db.execute("INSERT INTO orders(staff_member, order_date, completion, delivery_date) VALUES (?,?,?,?);", staff_member, order_date, completion, delivery_date)
-        ord_detail = db.execute("SELECT * FROM orders;")
-        return render_template("new_order.html",ord_detail = ord_detail)
     if request.method == "GET":
         return render_template("customer_order.html")
+    
+    
+@app.route("/order_details", methods=["GET", "POST"])
+def order_details():
+    """Show Order Form"""
+    if request.method == "POST":
+        # do this
+        completion_date = request.form.get("completion_date")
+        delivery_date = request.form.get("delivery_date")
+        item_name = request.form.get("item_name")
+        item_description = request.form.get("item_description")
+        colour_finish = request.form.get("colour_finish")
+        width = request.form.get("width")
+        depth = request.form.get("depth")
+        height = request.form.get("height")
+        extra_details = request.form.get("extra_details")
+        selling_price = request.form.get("selling_price")
+        del_col_take = request.form.get("del_col_take")
+        db.execute("INSERT INTO orders(completion, delivery_date, item_name, item_description, colour_finish, width, depth, height, extra_details, selling_price, del_col_take) VALUES (?,?,?,?,?,?,?,?,?);", completion_date, delivery_date, item_name, item_description, colour_finish, width, depth, height, extra_details, selling_price, del_col_take)
+        ord_detail = db.execute("SELECT * FROM orders;")
+        return render_template("list_of__orders.html",ord_detail = ord_detail)
+
+    if request.method == "GET":
+        return render_template("order_details.html")
+    
+
+@app.route("/list_of_orders", methods=["GET", "POST"])
+def list_of_orders():
+    # do this
+    if request.method == "POST":
+        # do this
+        return render_template("list_of_orders.html")
+
+    if request.method == "GET":
+        ord_detail = db.execute("SELECT * FROM orders;")
+        return render_template("list_of_orders.html", ord_detail = ord_detail)

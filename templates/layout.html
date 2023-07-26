@@ -17,11 +17,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <li class="nav-item"><a class="nav-link" href="/customer_order">Create New Order</a></li>
                     <li class="nav-item"><a class="nav-link" href="/new_customer">Create New Customer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/customer_order">Create New Order</a></li>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Add To Order</a>
+                    <a class="nav-link" href="/list_of_customers">Current Customers</a>
+                    <li class="nav-item"><a class="nav-link" href="/customer_order">Add to Order</a></li>
+                    <a class="nav-link" href="/list_of_orders">Current Orders</a>  
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,7 +41,7 @@
                 </li>
                 </ul>
                 <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Customer Last Name" aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Last Name" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
