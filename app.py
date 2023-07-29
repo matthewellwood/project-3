@@ -67,6 +67,22 @@ def list_of_customers():
         return render_template("list_of_customers.html",detail = detail)
         
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        staff_member = request.form.get("staff_member")
+        order_date = request.form.get("order_date")
+        customer_id = request.form.get("customer_id")
+        customer_last_name = request.form.get("customer_last_name")
+        postcode = request.form.get("postcode")
+        item_id = request.form.get("item_id")
+        info = db.execute("select * from customers JOIN orders ON customers.id = orders.cust_id GROUP BY last_name;")
+        return render_template("search.html", info = info)
+    else:
+        #search_items = staff_member, order_date, customer_id, customer_last_name, postcode, item_id
+        return render_template("search.html")
+    
+
 
 @app.route("/customer_order", methods=["GET", "POST"])
 def customer_order():

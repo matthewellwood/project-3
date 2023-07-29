@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block main %}
+<div class="section">
+   
+    <h2>What would you like to search for?</h2>
+
+            <form action="/search" method="post">
+                <div class ="mb-3">
+                    <div class="row my-custom-row justify-content-center align-items-center">
+                        <div class="col-sm-4"><div class="p-3 border bg-light">
+                            
+                            <select id="choice" name="choice">
+                                <option value="staff_member">Staff Member</option>
+                                <option value="order_date">Order Date</option>
+                                <option value="customer_id">Customer id</option>
+                                <option value="customer_last_name">Customer Last Name</option>
+                                <option value="postcode">Postcode</option>
+                                <option value="item_id">Item ID</option>
+                            </select>
+                            <div class="col-sm-4"><div class="p-3 border bg-light">
+                            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="staff_member" placeholder="Details" type="text">
+                            </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+
+        {% endblock %}
+    </main>
+
+
+
+
+</body>
