@@ -126,6 +126,7 @@ def order_details():
         extra_details = request.form.get("extra_details")
         selling_price = request.form.get("selling_price")
         del_col_take = request.form.get("del_col_take")
+        #change here
         db.execute("UPDATE orders SET completion = (?), delivery_date = (?), item_name = (?) , item_description = (?), colour_finish = (?), width = (?), depth = (?), height = (?), extra_details = (?), selling_price = (?), del_col_take = (?)  WHERE order_id = (?);", completion, delivery_date, item_name, item_description, colour_finish, width, depth, height, extra_details, selling_price, del_col_take, current_order)
         ord_detail = db.execute("SELECT * FROM orders;")
         return render_template("list_of_orders.html",ord_detail = ord_detail)
