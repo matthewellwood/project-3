@@ -127,11 +127,19 @@ def order_details():
         selling_price = request.form.get("selling_price")
         del_col_take = request.form.get("del_col_take")
         #change here
+        #db.execute("INSERT INTO stock (item_name, item_description, colour_finish, width, depth, height, selling_price) VALUES (?, ?, ?, ?, ?, ?, ?);",item_name, item_description, colour_finish, width, depth, height, selling_price)
+        item_check = db.execute("SELECT item_id,item_name FROM stock WHERE item_name = (?);", item_name)
+        for row in item_check:
+            item_id = row["item_id"]
+            if not item_id:
+                db.execute("INSERT INTO stock (item_name, item_description, colour_finish, width, depth, height, selling_price) VALUES (?, ?, ?, ?, ?, ?, ?);",item_name, item_description, colour_finish, width, depth, height, selling_price)
+            else:
+                db.execute("INSERT INTO stock (item_name, item_description, colour_finish, width, depth, height, selling_price) VALUES (?, ?, ?, ?, ?, ?, ?) WHERE item_id = (?);",item_name, item_description, colour_finish, width, depth, height, selling_price, item_id)
         db.execute("UPDATE orders SET completion = (?), delivery_date = (?), item_name = (?) , item_description = (?), colour_finish = (?), width = (?), depth = (?), height = (?), extra_details = (?), selling_price = (?), del_col_take = (?)  WHERE order_id = (?);", completion, delivery_date, item_name, item_description, colour_finish, width, depth, height, extra_details, selling_price, del_col_take, current_order)
         ord_detail = db.execute("SELECT * FROM orders;")
         return render_template("list_of_orders.html",ord_detail = ord_detail)
     else:
-        ord_detail = db.execute("select * from orders join customers on orders.cust_id = customers.id;")
+        ord_detail = db.execute("select staff_member, order_id, order_date, completion, orders.selling_price, delivery_date, stock.item_id, orders.item_name, address_3, postcode from orders join customers on orders.cust_id = customers.id join stock on orders.item_name = stock.item_name;")
         return render_template("list_of_orders.html", ord_detail = ord_detail)
     
 
