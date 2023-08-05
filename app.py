@@ -153,3 +153,35 @@ def list_of_orders():
     if request.method == "GET":
         ord_detail = db.execute("select * from orders join customers on orders.cust_id = customers.id;")
         return render_template("list_of_orders.html", ord_detail = ord_detail)
+    
+@app.route("/stock_list", methods=["GET", "POST"])
+def stock_list():
+        if request.method == "POST":
+        # do this
+            return render_template("stock_list.html")
+
+        if request.method == "GET":
+            stock = db.execute("SELECT * FROM stock;")
+            return render_template("stock_list.html", stock = stock)
+        
+
+@app.route("/lounge.html", methods=["GET", "POST"])
+def lounge():
+        if request.method == "POST":
+        # do this
+            return render_template("stock_list.html")
+
+        if request.method == "GET":
+            lounge = db.execute("SELECT * FROM stock WHERE Type = 'lounge' ;")
+            return render_template("lounge.html", lounge = lounge)
+
+
+@app.route("/bedroom.html", methods=["GET", "POST"])
+def bedroom():
+        if request.method == "POST":
+        # do this
+            return render_template("stock_list.html")
+
+        if request.method == "GET":
+            bedroom = db.execute("SELECT * FROM stock WHERE Type = 'bedroom' ;")
+            return render_template("bedroom.html", bedroom = bedroom)
