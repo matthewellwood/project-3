@@ -101,11 +101,23 @@ def customer_order():
         db.execute("INSERT INTO orders(cust_id, staff_member, order_date, customer_last_name) VALUES (?, ?, ?, ?);", customer_id,  staff_member, order_date, customer_last_name)
         order_info = db.execute("SELECT * FROM orders;")
         last_elem =order_info[len(order_info)-1]
-        return render_template("order_details.html", order_info = order_info, last_elem = last_elem)
+        return render_template("stock_list.html")
     if request.method == "GET":
         return render_template("customer_order.html")
     
+@app.route("/add_to__order", methods=["GET", "POST"])
+def add_to__order():
+    """Show Order Form"""
+    if request.method == "POST":
+        # do stuff
+        order_info = db.execute("SELECT * FROM orders;")
+        last_elem =order_info[len(order_info)-1]
+        return render_template("order_details.html", order_info = order_info, last_elem = last_elem)
+    if request.method == "GET":
+        return render_template("pick_stock.html")   
     
+
+
 @app.route("/order_details", methods=["GET", "POST"])
 def order_details():
     """Show Order Form"""
