@@ -123,14 +123,25 @@ def order_details():
     """Show Order Form"""
     if request.method == "POST":
         # do this
+        quantity = request.form.get("quantity")
+        item_id = request.form.get("item")
+        item_check = db.execute("SELECT Range, Style, selling_price FROM stock WHERE item_id = (?);", item_id)
+        for row in item_check:
+            name = row["Range"]
+            item_description = row["Style"]
+            selling_price = row["selling_price"]
         order_number = db.execute("SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1;")
         for row in order_number:
             current = row["order_id"]
             current_order = int(current)
+        db.execute("UPDATE orders SET item_name = (?) , item_description = (?), selling_price = (?), quantity = (?) WHERE order_id = (?);", name, item_description, selling_price, quantity, current_order)
+        order_info = db.execute("SELECT * FROM orders WHERE order_id = (?);", current_order)
+        return render_template("order.html",order = order_info)
+        
+        
+        
         completion = request.form.get("completion")
         delivery_date = request.form.get("delivery_date")
-        item_name = request.form.get("item_name")
-        item_description = request.form.get("item_description")
         colour_finish = request.form.get("colour_finish")
         width = request.form.get("width")
         depth = request.form.get("depth")
@@ -138,16 +149,7 @@ def order_details():
         extra_details = request.form.get("extra_details")
         selling_price = request.form.get("selling_price")
         del_col_take = request.form.get("del_col_take")
-        #change here
-        #db.execute("INSERT INTO stock (item_name, item_description, colour_finish, width, depth, height, selling_price) VALUES (?, ?, ?, ?, ?, ?, ?);",item_name, item_description, colour_finish, width, depth, height, selling_price)
-        item_check = db.execute("SELECT item_id,item_name FROM stock WHERE item_name = (?);", item_name)
-        for row in item_check:
-            item_id = row["item_id"]
-            if not item_id:
-                db.execute("INSERT INTO stock (item_name, item_description, colour_finish, width, depth, height, selling_price) VALUES (?, ?, ?, ?, ?, ?, ?);",item_name, item_description, colour_finish, width, depth, height, selling_price)
-            else:
-                db.execute("INSERT INTO stock (item_name, item_description, colour_finish, width, depth, height, selling_price) VALUES (?, ?, ?, ?, ?, ?, ?) WHERE item_id = (?);",item_name, item_description, colour_finish, width, depth, height, selling_price, item_id)
-        db.execute("UPDATE orders SET completion = (?), delivery_date = (?), item_name = (?) , item_description = (?), colour_finish = (?), width = (?), depth = (?), height = (?), extra_details = (?), selling_price = (?), del_col_take = (?)  WHERE order_id = (?);", completion, delivery_date, item_name, item_description, colour_finish, width, depth, height, extra_details, selling_price, del_col_take, current_order)
+        db.execute("UPDATE orders SET completion = (?), delivery_date = (?), item_name = (?) , item_description = (?), colour_finish = (?), width = (?), depth = (?), height = (?), extra_details = (?), selling_price = (?), del_col_take = (?)  WHERE order_id = (?);", completion, delivery_date, name, item_description, colour_finish, width, depth, height, extra_details, selling_price, del_col_take, current_order)
         ord_detail = db.execute("SELECT * FROM orders;")
         return render_template("list_of_orders.html",ord_detail = ord_detail)
     else:
