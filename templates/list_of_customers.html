@@ -29,8 +29,8 @@ Customer Details
         <tbody>
             {% for row in detail %}
             <tr>
-                <form action="/customer_order" method="post">
-                    <td><input type="hidden" name="customer_id" VALUE="{{ row['id'] }}"><button class="btn btn-primary" type="submit">Select</button></td>
+                <form action="/list_of_customers" method="post">
+                    <td><input type="hidden" name="customer_id" VALUE="{{ row['id'] }}"><button class="btn btn-primary" type="submit">Create Order</button></td>
                 </form>
                 <td class="text-start">{{ row["id"] }}</td>
                 <td class="text-start">{{ row["last_name"] }}</td>

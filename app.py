@@ -41,6 +41,14 @@ def index():
         return render_template("customer_order.html")
 
 
+@app.route("/order", methods=["GET", "POST"])
+def order():
+    """Show order Page"""
+    if request.method == "POST":
+        return render_template ("stock_list.html")
+    else:
+        return render_template("order.html")
+
 
 @app.route("/new_customer", methods=["GET", "POST"])
 def new_customer():
@@ -60,9 +68,13 @@ def new_customer():
     if request.method == "GET":
         return render_template("new_customer.html")
     
-@app.route("/list_of_customers", methods=["GET"])
+@app.route("/list_of_customers", methods=["GET", "POST"])
 def list_of_customers():
-    if request.method == "GET":
+    if request.method == "POST":
+        customer_id = request.form.get("customer_id")
+        detail = db.execute("select * from customers WHERE id = (?);", customer_id)
+        return render_template("customer_order.html",detail = detail)
+    else:
         detail = db.execute("select * from customers;")
         return render_template("list_of_customers.html",detail = detail)
         
@@ -71,21 +83,10 @@ def list_of_customers():
 def search():
     if request.method == "POST":
         choice = request.form.get("choice")
-        #details = request.form.get("details")
-        #postcode = request.form.get("postcode")
-        #if choice == "customer_id" or choice == "customer_last_name" or choice == "postcode" :
         custom = db.execute("select * from customers GROUP BY last_name;")
-        #else:
         orders = db.execute("select * from orders;")
-        #order_date = request.form.get("order_date")
-        #customer_id = request.form.get("customer_id")
-        #customer_last_name = request.form.get("customer_last_name")
-        #postcode = request.form.get("postcode")
-        #item_id = request.form.get("item_id")
-        #info = db.execute("select * from customers JOIN orders ON customers.id = orders.cust_id GROUP BY last_name;")
         return render_template("search_results.html", custom = custom, orders = orders)
     else:
-        #search_items = staff_member, order_date, customer_id, customer_last_name, postcode, item_id
         return render_template("search.html")
     
 
@@ -97,16 +98,38 @@ def customer_order():
         staff_member = request.form.get("staff_member")
         order_date = request.form.get("order_date")
         customer_id = request.form.get("customer_id")
-        customer_last_name = request.form.get("customer_last_name")
+        deposit = request.form.get("deposit_taken")
+        customer = db.execute ("SELECT * FROM customers WHERE id = (?);", customer_id)
+        for row in customer:
+            customer_last_name = row["last_name"]
         db.execute("INSERT INTO orders(cust_id, staff_member, order_date, customer_last_name) VALUES (?, ?, ?, ?);", customer_id,  staff_member, order_date, customer_last_name)
         order_info = db.execute("SELECT * FROM orders;")
         last_elem =order_info[len(order_info)-1]
-        return render_template("stock_list.html")
-    if request.method == "GET":
+        return render_template("order_basics.html", last_elem = last_elem)
+    else:
         return render_template("customer_order.html")
     
-@app.route("/add_to__order", methods=["GET", "POST"])
-def add_to__order():
+
+@app.route("/order_basics", methods=["GET", "POST"])
+def order_basics():
+    # things to change
+    if request.method == "POST":
+        order_info = db.execute("SELECT * FROM orders;")
+        last_elem =order_info[len(order_info)-1]
+        return render_template("stock_list.html", last_elem = last_elem)
+    else:
+        return render_template("order_basics.html") 
+
+    
+
+@app.route("/create_order", methods=["GET", "POST"])
+def create_order():
+    # things to change
+    if request.method == "GET":
+        return render_template("pick_stock.html")   
+
+@app.route("/add_to_order", methods=["GET", "POST"])
+def add_to_order():
     """Show Order Form"""
     if request.method == "POST":
         # do stuff
@@ -137,9 +160,6 @@ def order_details():
         db.execute("UPDATE orders SET item_name = (?) , item_description = (?), selling_price = (?), quantity = (?) WHERE order_id = (?);", name, item_description, selling_price, quantity, current_order)
         order_info = db.execute("SELECT * FROM orders WHERE order_id = (?);", current_order)
         return render_template("order.html",order = order_info)
-        
-        
-        
         completion = request.form.get("completion")
         delivery_date = request.form.get("delivery_date")
         colour_finish = request.form.get("colour_finish")
@@ -172,9 +192,9 @@ def list_of_orders():
 def stock_list():
         if request.method == "POST":
         # do this
+            stock = db.execute("SELECT * FROM stock;")
             return render_template("stock_list.html")
-
-        if request.method == "GET":
+        else:
             stock = db.execute("SELECT * FROM stock;")
             return render_template("stock_list.html", stock = stock)
         

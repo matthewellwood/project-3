@@ -7,14 +7,13 @@ Customer Order
 {% block main %}
 <form action="/customer_order" method="post">
     <div class ="mb-3">
+        {% for row in detail %}
+            <td><input type="hidden" name="customer_id" VALUE="{{ row['id'] }}"></td>
+        {% endfor %}
         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="staff_member" placeholder="Order Taken By" type="text">
         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="order_date" placeholder="Order Date" type="text">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="customer_id" placeholder="Customer id OR " type="text">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="customer_last_name" placeholder="Customer Last Name" type="text">
-
     <div class ="mb-3">
         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="deposit_taken" placeholder="Deposit Taken" type="text">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="paid_in_full" placeholder="Paid in Full" type="text">
     </div>
     <button class="btn btn-primary" type="submit">Next</button>
 </form>

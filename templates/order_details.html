@@ -7,42 +7,29 @@ Order Details
 {% block main %}
 
 <form action="/order_details" method="post">
-    <div class ="mb-3">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="completion" placeholder="Approx Completion date" type="text">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="delivery_date" placeholder="Planned Delivery date" type="text">
-        <div class="mb-3">
-            <div class="row my-custom-row justify-content-center align-items-center">
-                <div class="col-sm-4"><div class="p-3 border bg-light">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="item_name" placeholder="Item_Name" type="text">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="item_description" placeholder="Item_Description" type="text">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="colour-finish" placeholder="Colour/Finish" type="text">
-                </div>
+    <div class="mb-3">
+        <div class="row my-custom-row justify-content-center align-items-center">
+            <div class="col-sm-4"><div class="p-3 border bg-light">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="item_name" placeholder="Item_Name" type="text">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="item_description" placeholder="Item_Description" type="text">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="colour-finish" placeholder="Colour/Finish" type="text">
             </div>
-                <div class="col-sm-4"><div class="p-4 border bg-light">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="width" placeholder="Width" type="text">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="depth" placeholder="Depth" type="text">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="height" placeholder="Height" type="text">
-                </div>
+        </div>
+            <div class="col-sm-4"><div class="p-4 border bg-light">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="width" placeholder="Width" type="text">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="depth" placeholder="Depth" type="text">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="height" placeholder="Height" type="text">
             </div>
-            <div class="col-sm-4"><div class="p-4 border bg-light">                  
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="extra_details" placeholder="Extra_Details" type="text">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="selling_price" placeholder="Selling_price" type="text">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="del-col-take" placeholder="Delivery/Collection/Taken" type="text">
-                </div>
+        </div>
+        <div class="col-sm-4"><div class="p-4 border bg-light">                  
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="extra_details" placeholder="Extra_Details" type="text">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="selling_price" placeholder="Selling_price" type="text">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="del-col-take" placeholder="Delivery/Collection/Taken" type="text">
             </div>
-    </div>
-    </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-    </table>
-    </div>
-    </form>
-
-
-
-
-
-
-
-
-
+        </div>
+</div>
+</div>
+<button class="btn btn-primary" type="submit">Submit</button>
+</table>
+</form>
 {% endblock %}
