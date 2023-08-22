@@ -146,18 +146,20 @@ def order_details():
     """Show Order Form"""
     if request.method == "POST":
         # do this
-        quantity = request.form.get("quantity")
+        quant = request.form.get("Quantity")
+        if quant.isdigit():
+            quantity = int(float(quant))
         item_id = request.form.get("item")
         item_check = db.execute("SELECT Range, Style, selling_price FROM stock WHERE item_id = (?);", item_id)
         for row in item_check:
             name = row["Range"]
             item_description = row["Style"]
             selling_price = row["selling_price"]
-        order_number = db.execute("SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1;")
+        order_number = db.execute("SELECT order_no FROM orders ORDER BY order_no DESC LIMIT 1;")
         for row in order_number:
-            current = row["order_id"]
+            current = row["order_no"]
             current_order = int(current)
-        db.execute("UPDATE orders SET item_name = (?) , item_description = (?), selling_price = (?), quantity = (?) WHERE order_id = (?);", name, item_description, selling_price, quantity, current_order)
+        db.execute("UPDATE orders SET item_id = (?), item_name = (?), item_description = (?), selling_price = (?), quantity = (?) WHERE order_no = (?);",item_id, name, item_description, selling_price, quantity, current_order)
         order_info = db.execute("SELECT * FROM orders WHERE order_id = (?);", current_order)
         return render_template("order.html",order = order_info)
         completion = request.form.get("completion")
@@ -217,5 +219,5 @@ def bedroom():
             return render_template("stock_list.html")
 
         if request.method == "GET":
-            bedroom = db.execute("SELECT * FROM stock WHERE Type = 'bedroom' ;")
-            return render_template("bedroom.html", bedroom = bedroom)
+            bedroom = db.execute("SELECT * FROM stock WHERE Type = 'Bedroom' ;")
+            return render_template("bedroom.html", bedroom = bedroom)   
