@@ -37,8 +37,7 @@ def index():
     """Show Home Page"""
     if request.method == "GET":
         return render_template ("index.html")
-    else:
-        return render_template("customer_order.html")
+  
 
 
 @app.route("/order", methods=["GET", "POST"])
@@ -108,7 +107,17 @@ def customer_order():
         return render_template("order_basics.html", last_elem = last_elem)
     else:
         return render_template("customer_order.html")
-    
+
+
+@app.route("/select_customer", methods=["GET", "POST"])
+def select_customer():
+    # things to change
+    if request.method == "POST":
+        order_info = db.execute("SELECT * FROM orders;")
+        last_elem =order_info[len(order_info)-1]
+        return render_template("stock_list.html", last_elem = last_elem)
+    else:
+        return render_template("select_customer.html") 
 
 @app.route("/order_basics", methods=["GET", "POST"])
 def order_basics():

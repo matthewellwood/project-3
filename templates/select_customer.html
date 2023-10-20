@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Stock Selector
+{% endblock %}
+
+{% block main %}
+<div class="section">
+    <thead>
+
+    </thead>
+    <tbody>
+    
+            <h2>Make Your Selection Below</h2>
+             
+
+                <table class="table">
+                <tr>
+                <form action="/new_customer">                    
+                    <td><button class="btn btn-primary" type="submit">Create a New Customer</button></td>
+                </form> 
+            </tr>
+                <tr>
+                <form action="/list_of_customers">                      
+                    <td><button class="btn btn-primary" type="submit">Current Customer List</button></td>
+                </form>   
+            </tr>
+        </table>
+        </nav>
+
+    </tbody>
+</div>
+
+
+
+{% endblock %}
